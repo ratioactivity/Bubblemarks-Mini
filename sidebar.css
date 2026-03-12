@@ -238,3 +238,21 @@ button:focus-visible,
   left: 10px;
   background-image: url("assets/singlestar2.gif");
 }
+
+.topbar-datetime {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.status-loading {
+  opacity: 0.8;
+}
+
+.status-ready {
+  opacity: 1;
+}
+
+.status-error {
+  color: #ffd3dc;
+}

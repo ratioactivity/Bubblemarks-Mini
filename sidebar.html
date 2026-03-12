@@ -16,9 +16,13 @@
         <img class="brand-icon" src="assets/icon128.png" alt="Bubblemarks Mini icon" />
         <div class="brand-block">
           <h1>Bubblemarks Mini</h1>
-          <p id="date-time" aria-live="polite">Loading date and time…</p>
+          <p class="topbar-datetime" aria-live="polite">
+            <span id="weekday-date" class="status-loading">Loading date…</span>
+            <span aria-hidden="true"> • </span>
+            <span id="clock-time" class="status-loading">Loading time…</span>
+          </p>
         </div>
-        <p id="weather" class="weather" aria-live="polite">Loading weather…</p>
+        <p id="weather-summary" class="weather status-loading" aria-live="polite">Loading weather…</p>
       </header>
 
       <main>
