@@ -1,6 +1,7 @@
 window.addEventListener("DOMContentLoaded", () => {
-  const dateTimeEl = document.getElementById("date-time");
-  const weatherEl = document.getElementById("weather");
+  const weekdayDateEl = document.getElementById("weekday-date");
+  const clockTimeEl = document.getElementById("clock-time");
+  const weatherSummaryEl = document.getElementById("weather-summary");
   const inputEl = document.getElementById("bookmark-search");
   const resultsEl = document.getElementById("results-list");
 
@@ -10,15 +11,60 @@ window.addEventListener("DOMContentLoaded", () => {
     { title: "Weather", url: "https://open-meteo.com" }
   ];
 
-  const renderTime = () => {
+  const dateFormatter = new Intl.DateTimeFormat([], {
+    weekday: "long",
+    month: "short",
+    day: "numeric"
+  });
+
+  const timeFormatter = new Intl.DateTimeFormat([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+
+  const weatherCodeMap = {
+    0: "Clear",
+    1: "Mostly clear",
+    2: "Partly cloudy",
+    3: "Overcast",
+    45: "Foggy",
+    48: "Rime fog",
+    51: "Light drizzle",
+    53: "Drizzle",
+    55: "Heavy drizzle",
+    56: "Freezing drizzle",
+    57: "Heavy freezing drizzle",
+    61: "Light rain",
+    63: "Rain",
+    65: "Heavy rain",
+    66: "Freezing rain",
+    67: "Heavy freezing rain",
+    71: "Light snow",
+    73: "Snow",
+    75: "Heavy snow",
+    77: "Snow grains",
+    80: "Light showers",
+    81: "Showers",
+    82: "Heavy showers",
+    85: "Light snow showers",
+    86: "Heavy snow showers",
+    95: "Thunderstorm",
+    96: "Thunderstorm + hail",
+    99: "Severe storm + hail"
+  };
+
+  const setStatusClass = (el, status) => {
+    el.classList.remove("status-loading", "status-ready", "status-error");
+    el.classList.add(status);
+  };
+
+  const renderDateAndTime = () => {
     const now = new Date();
-    dateTimeEl.textContent = now.toLocaleString([], {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    });
+    weekdayDateEl.textContent = dateFormatter.format(now);
+    clockTimeEl.textContent = timeFormatter.format(now);
+    setStatusClass(weekdayDateEl, "status-ready");
+    setStatusClass(clockTimeEl, "status-ready");
   };
 
   const renderResults = (query) => {
@@ -52,21 +98,32 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   const fetchWeather = async () => {
+    setStatusClass(weatherSummaryEl, "status-loading");
+    weatherSummaryEl.textContent = "Refreshing weather…";
+
     try {
       const response = await fetch(
-        "https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&current=temperature_2m,weather_code"
+        "https://api.open-meteo.com/v1/forecast?latitude=37.2089&longitude=-93.2923&current=temperature_2m,weather_code&temperature_unit=fahrenheit",
+        { cache: "no-store" }
       );
+
+      if (!response.ok) {
+        throw new Error(`Weather request failed (${response.status})`);
+      }
+
       const data = await response.json();
       const current = data?.current;
 
-      if (!current) {
-        weatherEl.textContent = "Weather unavailable";
-        return;
+      if (!current || typeof current.temperature_2m !== "number" || typeof current.weather_code !== "number") {
+        throw new Error("Weather payload incomplete");
       }
 
-      weatherEl.textContent = `${Math.round(current.temperature_2m)}°C • code ${current.weather_code}`;
+      const condition = weatherCodeMap[current.weather_code] || "Unknown conditions";
+      weatherSummaryEl.textContent = `Springfield, MO: ${Math.round(current.temperature_2m)}°F • ${condition}`;
+      setStatusClass(weatherSummaryEl, "status-ready");
     } catch (error) {
-      weatherEl.textContent = "Weather unavailable";
+      weatherSummaryEl.textContent = "Springfield, MO weather unavailable";
+      setStatusClass(weatherSummaryEl, "status-error");
       console.error("Weather fetch failed:", error);
     }
   };
@@ -84,11 +141,12 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  renderTime();
-  fetchWeather();
+  renderDateAndTime();
   renderResults("");
+  fetchWeather();
 
-  setInterval(renderTime, 60000);
+  setInterval(renderDateAndTime, 1000);
+  setInterval(fetchWeather, 10 * 60 * 1000);
 
   console.log("✅ script validated");
 });
