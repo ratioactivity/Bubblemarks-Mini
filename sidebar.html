@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bubblemarks Mini Sidebar</title>
+    <link rel="stylesheet" href="sidebar.css" />
+  </head>
+  <body>
+    <div class="sidebar-shell" role="application" aria-label="Bubblemarks Mini sidebar">
+      <img class="decor decor-1" src="assets/singlestar1.gif" alt="" aria-hidden="true" />
+      <img class="decor decor-2" src="assets/singlestar2.gif" alt="" aria-hidden="true" />
+      <img class="decor decor-3" src="assets/singlestar3.gif" alt="" aria-hidden="true" />
+
+      <header class="top-info-bar" aria-label="Date, time, and weather">
+        <img class="brand-icon" src="assets/icon128.png" alt="Bubblemarks Mini icon" />
+        <div class="brand-block">
+          <h1>Bubblemarks Mini</h1>
+          <p id="date-time" aria-live="polite">Loading date and time…</p>
+        </div>
+        <p id="weather" class="weather" aria-live="polite">Loading weather…</p>
+      </header>
+
+      <main>
+        <section class="keyboard-search" aria-label="Keyboard search area">
+          <label for="bookmark-search">Search bookmarks</label>
+          <input
+            id="bookmark-search"
+            name="bookmark-search"
+            type="search"
+            placeholder="Type to search bookmarks..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <p class="search-hint">Press <kbd>Enter</kbd> to open the top result.</p>
+        </section>
+
+        <section class="bookmark-results" aria-label="Bookmark results container">
+          <h2>Results</h2>
+          <ul id="results-list" role="list">
+            <li class="empty">Start typing to find your bookmarks.</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+    <script src="bubbles-background.js"></script>
+    <script src="sidebar.js"></script>
+  </body>
+</html>
