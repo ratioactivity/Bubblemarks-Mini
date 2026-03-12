@@ -1,0 +1,144 @@
+@font-face {
+  font-family: "Bigbesty";
+  src: url("fonts/Bigbesty.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Papernotes";
+  src: url("fonts/Papernotes.ttf") format("truetype");
+}
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Papernotes", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: #06081f url("assets/stars.gif") repeat;
+  color: #f5f6ff;
+}
+
+.sidebar-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: 14px;
+}
+
+.top-info-bar,
+.keyboard-search,
+.bookmark-results {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  background: rgba(9, 12, 37, 0.78);
+  backdrop-filter: blur(4px);
+}
+
+.top-info-bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+}
+
+.brand-block h1 {
+  margin: 0;
+  font-family: "Bigbesty", cursive;
+  font-size: 1.45rem;
+}
+
+.brand-block p,
+.weather {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+main {
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.keyboard-search,
+.bookmark-results {
+  padding: 12px;
+}
+
+.keyboard-search label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+#bookmark-search {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+}
+
+.search-hint {
+  margin: 8px 0 0;
+  opacity: 0.9;
+}
+
+.bookmark-results h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+#results-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+#results-list a {
+  color: #8ed3ff;
+  text-decoration: none;
+}
+
+#results-list a:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  opacity: 0.8;
+}
+
+.decor {
+  position: absolute;
+  width: 22px;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.decor-1 {
+  top: 8px;
+  right: 10px;
+}
+
+.decor-2 {
+  top: 120px;
+  left: 10px;
+}
+
+.decor-3 {
+  bottom: 16px;
+  right: 14px;
+}
